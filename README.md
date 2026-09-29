@@ -29,20 +29,13 @@ export OPENAI_BASE_URL=http://127.0.0.1:8080/v1
 
 ## 使用方式
 
-將以下程式存成 `example.py`，以 `uv run example.py` 執行：
+執行[最小範例](examples/quickstart.py)，取得是否需要通知值班工程師的肯定答案機率：
 
-```python
-from jev import TypeSafeClient, Noul
-
-with TypeSafeClient(model="local-judge") as client:
-    result = client.system_one(
-        state="所有使用者都無法登入",
-        questions={"escalate": Noul(instructions="是否需要立即通知值班工程師？")},
-    )
-    print(result.nouls["escalate"].noul)
+```bash
+uv run python examples/quickstart.py
 ```
 
-完成最小呼叫後，接著執行 [JSON 範例](examples/README.md)，一次體驗 Choice、Score 與 Noul，並對照實測結果說明。該頁提供可直接在終端執行的完整命令，不必另建 Python 檔案。
+完成最小呼叫後，接著執行 [JSON 範例](examples/README.md)，一次體驗 Choice、Score 與 Noul，並對照實測結果說明。
 
 ## 深入閱讀
 

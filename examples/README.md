@@ -23,21 +23,10 @@ vLLM 的部署範例使用 `http://127.0.0.1:8000/v1`。若服務需要驗證，
 
 ## 呼叫 SDK
 
-在專案根目錄的 Bash 終端貼上整段命令，包含最後獨立一行的 `PY`。程式在主機執行，不需進入 Docker 容器：
+在專案根目錄執行 [json_request.py](json_request.py)。腳本會讀取同目錄的 `request.json`，程式在主機執行，不需進入 Docker 容器：
 
 ```bash
-uv run python - <<'PY'
-import json
-
-from jev import TypeSafeClient
-
-with open("examples/request.json", encoding="utf-8") as source:
-    request = json.load(source)
-
-with TypeSafeClient() as client:
-    result = client.system_one(**request)
-    print(result.model_dump_json(indent=2))
-PY
+uv run python examples/json_request.py
 ```
 
 此命令會實際呼叫模型並將回應印到終端機，不會讀取或覆寫示意回應檔。實際答案與 token 用量取決於模型及後端。
@@ -60,7 +49,7 @@ PY
 
 | 狀況 | 檢查方式 |
 | --- | --- |
-| 找不到 `examples/request.json` | 回到含有 `pyproject.toml` 的專案根目錄執行 |
+| 找不到 `request.json` | 確認 `request.json` 與 `json_request.py` 位於同一個目錄 |
 | 無法連線、HTTP 503 | 先完成模型載入；確認目前終端的 `OPENAI_BASE_URL` 為 `http://127.0.0.1:8080/v1` |
 | 找不到模型或無法辨識後端 | 檢查 `/v1/models` 是否包含 `local-judge` 與正確的 `owned_by`，不要把模型檔名當成部署別名 |
 
