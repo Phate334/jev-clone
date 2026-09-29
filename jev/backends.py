@@ -12,6 +12,12 @@ from .transport import _BaseClient
 class _Backend(_BaseClient):
     default_url = "http://127.0.0.1:8000/v1"
 
+    def __init__(self, *args, backend="auto", **kwargs):
+        if not isinstance(backend, str) or backend not in {"auto", "llamacpp", "vllm"}:
+            raise JevError("backend / JEV_BACKEND 必須為 auto、llamacpp 或 vllm")
+        super().__init__(*args, **kwargs)
+        self.backend = backend
+
     def evaluate_json(self, request):
         """Accept a Jev-shaped dict and return model/answers/usage as a dict.
 
@@ -61,6 +67,8 @@ class _Backend(_BaseClient):
 
 
     def _detect(self, model):
+        if self.backend != "auto":
+            return "llama" if self.backend == "llamacpp" else "vllm"
         with self._detection_lock:
             if model in self._detected:
                 return self._detected[model]
@@ -76,7 +84,7 @@ class _Backend(_BaseClient):
             elif owners == {"llamacpp"}:
                 kind = "llama"
             else:
-                raise JevError("無法從 /v1/models 的 owned_by 辨識 vLLM 或 llama.cpp；請確認代理保留原始模型資訊")
+                raise JevError("無法從 /v1/models 的 owned_by 辨識 vLLM 或 llama.cpp；請以 backend 或 JEV_BACKEND 指定 llamacpp 或 vllm")
             self._detected[model] = kind
             return kind
 

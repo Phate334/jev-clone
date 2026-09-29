@@ -27,7 +27,7 @@ class _BaseClient:
         self.base_url = (base_url or self.default_url).rstrip("/")
         parsed = urlsplit(self.base_url)
         if parsed.scheme not in {"http", "https"} or not parsed.netloc or parsed.query or parsed.fragment:
-            raise JevError("OPENAI_BASE_URL 必須是有效的 HTTP(S) 網址，不能包含查詢參數或片段")
+            raise JevError("後端網址必須是有效的 HTTP(S) 網址，不能包含查詢參數或片段")
         if self.base_url.endswith("/v1"):
             self.base_url = self.base_url[:-3]
         if isinstance(concurrency, bool) or not isinstance(concurrency, int) or concurrency < 1:

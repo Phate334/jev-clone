@@ -24,12 +24,14 @@ class TypeSafeClient:
     def __init__(self, api_key=None, *, model=None, retry=None, timeout=None,
                  headers=None, transport=None, http_client=None, openai_base_url=None, base_url=None,
                  concurrency=4, calibration_temperature=1.0,
-                 chat_template_kwargs=None):
+                 chat_template_kwargs=None, backend=None):
         if transport is not None and http_client is not None:
             raise ValueError("transport and http_client are mutually exclusive")
         if transport is not None or http_client is not None:
             raise NotImplementedError("Custom httpx2 clients/transports are not supported by this local adapter")
-        self.model = model or os.environ.get("TYPESAFE_DEFAULT_MODEL", "").strip() or "local-judge"
+        self.model = (model if model is not None else
+                      os.environ.get("JEV_MODEL", "").strip() or
+                      os.environ.get("TYPESAFE_DEFAULT_MODEL", "").strip() or "local-judge")
         self.retry = retry if retry is not None else RetryPolicy()
         if not isinstance(self.retry, RetryPolicy):
             raise TypeSafeError("retry must be a RetryPolicy from this module")
@@ -39,10 +41,14 @@ class TypeSafeClient:
             raise TypeSafeError("openai_base_url 與相容參數 base_url 請擇一設定")
         endpoint = openai_base_url if openai_base_url is not None else base_url
         if endpoint is None:
-            endpoint = os.environ.get("OPENAI_BASE_URL", "").strip() or self.default_url
+            endpoint = (os.environ.get("JEV_BASE_URL", "").strip() or
+                        os.environ.get("OPENAI_BASE_URL", "").strip() or self.default_url)
         self.openai_base_url = endpoint
         self._backend = _Backend(base_url=endpoint,
-                            api_key=api_key if api_key is not None else os.environ.get("OPENAI_API_KEY"),
+                            api_key=api_key if api_key is not None else (
+                                os.environ.get("JEV_API_KEY") or os.environ.get("OPENAI_API_KEY")),
+                            backend=backend if backend is not None else (
+                                os.environ.get("JEV_BACKEND", "").strip() or "auto"),
                             concurrency=concurrency, timeout=120.0 if timeout is None else timeout,
                             calibration_temperature=calibration_temperature,
                             chat_template_kwargs=chat_template_kwargs,

@@ -21,11 +21,15 @@ uv 依 `.python-version` 與 `uv.lock` 建立 Python 環境。第一次使用建
 確認部署文件的 `/health` 回傳 `ok` 後，在執行 Python 的終端設定：
 
 ```bash
-export OPENAI_BASE_URL=http://127.0.0.1:8080/v1
-# vLLM 改設為 http://127.0.0.1:8000/v1
+export JEV_BASE_URL=http://127.0.0.1:8080/v1
+export JEV_MODEL=local-judge
+export JEV_BACKEND=llamacpp
+# vLLM：JEV_BACKEND=vllm，JEV_BASE_URL=http://127.0.0.1:8000/v1
 ```
 
-若後端需要驗證，另設 `OPENAI_API_KEY`。換一個終端時需重新設定環境變數。Python 在主機執行，不是在模型容器內執行；以下命令均以專案根目錄為工作目錄。
+若後端需要驗證，另設 `JEV_API_KEY`。換一個終端時需重新設定環境變數。Python 在主機執行，不是在模型容器內執行；以下命令均以專案根目錄為工作目錄。
+
+模型名稱使用服務提供的 ID 或別名，套件不限制權重來源。`JEV_BACKEND` 可設為 `llamacpp`、`vllm` 或 `auto`（預設）；明確指定後端時不會查詢 `/v1/models`，適合模型資訊不完整的 proxy。proxy 仍需支援[後端原生 API](docs/python-api.md#自動辨識)。
 
 ## 使用方式
 
