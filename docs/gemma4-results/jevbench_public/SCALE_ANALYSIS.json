@@ -1,0 +1,173 @@
+{
+  "suite": "jevbench_public",
+  "n_tasks": 231,
+  "inventory": {
+    "easy": 48,
+    "original": 72,
+    "hard": 111
+  },
+  "settings": {
+    "np": 2,
+    "ctx": 16384,
+    "ctx_per_slot": 8192,
+    "concurrency": 2,
+    "ngl": 0,
+    "jinja": true,
+    "reasoning_budget": 0,
+    "quant": "UD-Q4_K_XL",
+    "mmproj": "F16"
+  },
+  "models": {
+    "e2b": {
+      "label": "E2B (UD-Q4_K_XL)",
+      "model": "gemma-4-E2B-it-qat-UD-Q4_K_XL",
+      "model_path": "/workspace/models/gemma-4-E2B-it-qat-GGUF/gemma-4-E2B-it-qat-UD-Q4_K_XL.gguf",
+      "n_ok": 231,
+      "n_failed": 0,
+      "overall_accuracy": 0.6666666666666666,
+      "overall_pct": 66.7,
+      "by_tier": {
+        "easy": 100.0,
+        "original": 77.8,
+        "hard": 45.0
+      },
+      "by_type": {
+        "noul": 67.6,
+        "choice": 66.2,
+        "score": 66.7
+      },
+      "latency_ms": {
+        "mean": 5820.6,
+        "median": 1209.6,
+        "p95": 24562.7
+      },
+      "runtime_sec_this_run": 673.6,
+      "counts": {
+        "n": 231,
+        "correct": 154
+      }
+    },
+    "e4b": {
+      "label": "E4B (UD-Q4_K_XL)",
+      "model": "gemma-4-E4B-it-qat-UD-Q4_K_XL",
+      "model_path": "/workspace/models/gemma-4-E4B-it-qat-GGUF/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf",
+      "n_ok": 231,
+      "n_failed": 0,
+      "overall_accuracy": 0.7748917748917749,
+      "overall_pct": 77.5,
+      "by_tier": {
+        "easy": 100.0,
+        "original": 97.2,
+        "hard": 55.0
+      },
+      "by_type": {
+        "noul": 78.4,
+        "choice": 77.0,
+        "score": 77.8
+      },
+      "latency_ms": {
+        "mean": 11044.0,
+        "median": 2354.6,
+        "p95": 45228.7
+      },
+      "runtime_sec_this_run": 1287.0,
+      "counts": {
+        "n": 231,
+        "correct": 179
+      }
+    },
+    "12b": {
+      "label": "12B (UD-Q4_K_XL)",
+      "model": "gemma-4-12B-it-qat-UD-Q4_K_XL",
+      "model_path": "/workspace/models/gemma-4-12B-it-qat-GGUF/gemma-4-12B-it-qat-UD-Q4_K_XL.gguf",
+      "n_ok": 231,
+      "n_failed": 0,
+      "overall_accuracy": 0.8614718614718615,
+      "overall_pct": 86.1,
+      "by_tier": {
+        "easy": 100.0,
+        "original": 97.2,
+        "hard": 73.0
+      },
+      "by_type": {
+        "noul": 87.8,
+        "choice": 86.3,
+        "score": 77.8
+      },
+      "latency_ms": {
+        "mean": 26453.0,
+        "median": 6395.5,
+        "p95": 109474.3
+      },
+      "runtime_sec_this_run": 3083.7,
+      "counts": {
+        "n": 231,
+        "correct": 199
+      }
+    }
+  },
+  "deltas_pp": {
+    "overall": {
+      "e2b_to_e4b_pp": 10.8,
+      "e4b_to_12b_pp": 8.7,
+      "e2b_to_12b_pp": 19.5
+    },
+    "by_tier": {
+      "easy": {
+        "e2b_to_e4b_pp": 0.0,
+        "e4b_to_12b_pp": 0.0,
+        "e2b_to_12b_pp": 0.0
+      },
+      "original": {
+        "e2b_to_e4b_pp": 19.4,
+        "e4b_to_12b_pp": 0.0,
+        "e2b_to_12b_pp": 19.4
+      },
+      "hard": {
+        "e2b_to_e4b_pp": 9.9,
+        "e4b_to_12b_pp": 18.0,
+        "e2b_to_12b_pp": 27.9
+      }
+    }
+  },
+  "verdict": "reasonable_scaling",
+  "verdict_note": "Accuracy rises monotonically with model size (E2B→E4B→12B). Gains concentrate on hard (+28.0 pp E2B→12B) and original (+19.4 pp, mostly E2B→E4B); easy is already saturated at 100% for all three. Latency/runtime grow roughly with size.",
+  "does_accuracy_rise_with_size": true,
+  "where_gains": {
+    "easy": "saturated (100% all models)",
+    "original": "E2B 77.8% → E4B/12B 97.2% (mostly E2B→E4B; 12B flat vs E4B)",
+    "hard": "E2B 45.0% → E4B 55.0% → 12B 73.0% (primary scaling locus)"
+  },
+  "latency_tradeoff": {
+    "mean_ms": {
+      "e2b": 5820.6,
+      "e4b": 11044.0,
+      "12b": 26453.0
+    },
+    "median_ms": {
+      "e2b": 1209.6,
+      "e4b": 2354.6,
+      "12b": 6395.5
+    },
+    "wall_runtime_sec": {
+      "e2b": 673.6,
+      "e4b": 1287.0,
+      "12b": 3083.7
+    },
+    "mean_latency_ratio_vs_e2b": {
+      "e4b": 1.9,
+      "12b": 4.54
+    },
+    "runtime_ratio_vs_e2b": {
+      "e4b": 1.91,
+      "12b": 4.58
+    }
+  },
+  "generated_at": "2026-09-27 10:28:11 UTC+08:00 (UTC+8)",
+  "paths": {
+    "e2b": "results/jevbench_public/e2b/",
+    "e4b": "results/jevbench_public/e4b/",
+    "12b": "results/jevbench_public/12b/"
+  },
+  "canonical_report": "../../evaluation.md"
+}

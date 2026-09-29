@@ -1,0 +1,181 @@
+{
+  "model": "gemma-4-E4B-it-qat-UD-Q4_K_XL",
+  "n_decisions": 231,
+  "n_ok": 231,
+  "n_failed": 0,
+  "overall_accuracy": 0.7748917748917749,
+  "by_type": {
+    "noul": 0.7837837837837838,
+    "choice": 0.7697841726618705,
+    "score": 0.7777777777777778
+  },
+  "by_tier": {
+    "easy": 1.0,
+    "original": 0.9722222222222222,
+    "hard": 0.5495495495495496
+  },
+  "by_family": {
+    "adequacy": 0.9166666666666666,
+    "adversarial": 1.0,
+    "ambiguous": 0.42857142857142855,
+    "extraction": 1.0,
+    "fact": 1.0,
+    "intent": 1.0,
+    "judge_hard": 0.7647058823529411,
+    "long_policy": 0.42105263157894735,
+    "multi_hop": 0.5555555555555556,
+    "ordinal": 1.0,
+    "policy": 0.9166666666666666,
+    "probability": 0.6,
+    "routing": 1.0,
+    "routing_hard": 1.0,
+    "temporal_numeric": 0.13333333333333333,
+    "tool_selection": 1.0,
+    "tradeoff": 0.16666666666666666,
+    "trap": 0.875
+  },
+  "counts": {
+    "overall": {
+      "n": 231,
+      "correct": 179
+    },
+    "by_type": {
+      "noul": {
+        "n": 74,
+        "correct": 58
+      },
+      "choice": {
+        "n": 139,
+        "correct": 107
+      },
+      "score": {
+        "n": 18,
+        "correct": 14
+      }
+    },
+    "by_tier": {
+      "easy": {
+        "n": 48,
+        "correct": 48
+      },
+      "original": {
+        "n": 72,
+        "correct": 70
+      },
+      "hard": {
+        "n": 111,
+        "correct": 61
+      }
+    },
+    "by_family": {
+      "adequacy": {
+        "n": 12,
+        "correct": 11
+      },
+      "adversarial": {
+        "n": 6,
+        "correct": 6
+      },
+      "ambiguous": {
+        "n": 7,
+        "correct": 3
+      },
+      "extraction": {
+        "n": 24,
+        "correct": 24
+      },
+      "fact": {
+        "n": 12,
+        "correct": 12
+      },
+      "intent": {
+        "n": 24,
+        "correct": 24
+      },
+      "judge_hard": {
+        "n": 17,
+        "correct": 13
+      },
+      "long_policy": {
+        "n": 19,
+        "correct": 8
+      },
+      "multi_hop": {
+        "n": 18,
+        "correct": 10
+      },
+      "ordinal": {
+        "n": 12,
+        "correct": 12
+      },
+      "policy": {
+        "n": 12,
+        "correct": 11
+      },
+      "probability": {
+        "n": 10,
+        "correct": 6
+      },
+      "routing": {
+        "n": 12,
+        "correct": 12
+      },
+      "routing_hard": {
+        "n": 5,
+        "correct": 5
+      },
+      "temporal_numeric": {
+        "n": 15,
+        "correct": 2
+      },
+      "tool_selection": {
+        "n": 12,
+        "correct": 12
+      },
+      "tradeoff": {
+        "n": 6,
+        "correct": 1
+      },
+      "trap": {
+        "n": 8,
+        "correct": 7
+      }
+    },
+    "score_argmax": {
+      "n": 18,
+      "correct": 14
+    }
+  },
+  "score_argmax_accuracy": 0.7777777777777778,
+  "latency_ms": {
+    "mean": 11043.975091142973,
+    "median": 2354.567329999554,
+    "p95": 45228.652471001624,
+    "min": 1581.2890399975004,
+    "max": 62188.25783700231,
+    "sum": 2551158.2460540268
+  },
+  "scoring_rule": {
+    "choice": "argmax(probabilities key) == expected",
+    "noul": "('yes' if noul>=0.5 else 'no') == expected",
+    "score": "round(E[level]) == int(expected) [also track official argmax]"
+  },
+  "io_shape": "Jev System One request/answer recorded; transport = llama-server /v1/chat/completions + GBNF + logprobs",
+  "np": 2,
+  "ctx": 16384,
+  "concurrency": 2,
+  "port": 8080,
+  "base_url": "http://127.0.0.1:8080",
+  "model_path": "/workspace/models/gemma-4-E4B-it-qat-GGUF/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf",
+  "mmproj_path": "/workspace/models/gemma-4-E4B-it-qat-GGUF/mmproj-F16.gguf",
+  "binary": "/workspace/gemma4-jev-exp/bin/llama-b11153/llama-server",
+  "n_tasks": 231,
+  "n_pending_this_run": 231,
+  "n_already_done": 0,
+  "runtime_sec_this_run": 1287.006227089998,
+  "tiers": [
+    "easy",
+    "original",
+    "hard"
+  ]
+}

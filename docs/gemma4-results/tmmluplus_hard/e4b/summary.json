@@ -1,0 +1,202 @@
+{
+  "model": "gemma-4-E4B-it-qat-UD-Q4_K_XL",
+  "suite": "tmmluplus_hard_v1.1",
+  "dataset": "ikala/tmmluplus",
+  "revision": "v1.1",
+  "n_decisions": 7862,
+  "n_ok": 7862,
+  "n_failed": 0,
+  "overall_accuracy": 0.48435512592215724,
+  "by_group": {
+    "professional": 0.4733739837398374,
+    "stem_quant": 0.48224661071659136,
+    "taiwan_zh": 0.5254845656855707
+  },
+  "by_subject": {
+    "accounting": 0.2887700534759358,
+    "administrative_law": 0.4282238442822384,
+    "advance_chemistry": 0.5,
+    "basic_medical_science": 0.6292372881355932,
+    "chinese_language_and_literature": 0.3384615384615385,
+    "dentistry": 0.5415617128463476,
+    "engineering_math": 0.45348837209302323,
+    "financial_analysis": 0.49868766404199477,
+    "geography_of_taiwan": 0.5941644562334217,
+    "management_accounting": 0.4786729857819905,
+    "nautical_science": 0.43830570902394106,
+    "official_document_management": 0.49019607843137253,
+    "optometry": 0.40327868852459015,
+    "organic_chemistry": 0.6116504854368932,
+    "pharmacology": 0.5314685314685315,
+    "pharmacy": 0.39050131926121373,
+    "physics": 0.5274725274725275,
+    "statistics_and_machine_learning": 0.6681818181818182,
+    "taiwanese_hokkien": 0.3046875,
+    "taxation": 0.31232876712328766,
+    "trust_practice": 0.434010152284264,
+    "ttqav2": 0.7053571428571429,
+    "tve_mathematics": 0.2972972972972973
+  },
+  "counts": {
+    "overall": {
+      "n": 7862,
+      "correct": 3808
+    },
+    "by_group": {
+      "professional": {
+        "n": 4920,
+        "correct": 2329
+      },
+      "stem_quant": {
+        "n": 1549,
+        "correct": 747
+      },
+      "taiwan_zh": {
+        "n": 1393,
+        "correct": 732
+      }
+    },
+    "by_subject": {
+      "accounting": {
+        "n": 187,
+        "correct": 54
+      },
+      "administrative_law": {
+        "n": 411,
+        "correct": 176
+      },
+      "advance_chemistry": {
+        "n": 122,
+        "correct": 61
+      },
+      "basic_medical_science": {
+        "n": 944,
+        "correct": 594
+      },
+      "chinese_language_and_literature": {
+        "n": 195,
+        "correct": 66
+      },
+      "dentistry": {
+        "n": 397,
+        "correct": 215
+      },
+      "engineering_math": {
+        "n": 86,
+        "correct": 39
+      },
+      "financial_analysis": {
+        "n": 381,
+        "correct": 190
+      },
+      "geography_of_taiwan": {
+        "n": 754,
+        "correct": 448
+      },
+      "management_accounting": {
+        "n": 211,
+        "correct": 101
+      },
+      "nautical_science": {
+        "n": 543,
+        "correct": 238
+      },
+      "official_document_management": {
+        "n": 204,
+        "correct": 100
+      },
+      "optometry": {
+        "n": 915,
+        "correct": 369
+      },
+      "organic_chemistry": {
+        "n": 103,
+        "correct": 63
+      },
+      "pharmacology": {
+        "n": 572,
+        "correct": 304
+      },
+      "pharmacy": {
+        "n": 379,
+        "correct": 148
+      },
+      "physics": {
+        "n": 91,
+        "correct": 48
+      },
+      "statistics_and_machine_learning": {
+        "n": 220,
+        "correct": 147
+      },
+      "taiwanese_hokkien": {
+        "n": 128,
+        "correct": 39
+      },
+      "taxation": {
+        "n": 365,
+        "correct": 114
+      },
+      "trust_practice": {
+        "n": 394,
+        "correct": 171
+      },
+      "ttqav2": {
+        "n": 112,
+        "correct": 79
+      },
+      "tve_mathematics": {
+        "n": 148,
+        "correct": 44
+      }
+    }
+  },
+  "latency_ms": {
+    "mean": 4590.456944023917,
+    "median": 4371.656889998121,
+    "p95": 6429.664958350986,
+    "min": 1788.8759909983492,
+    "max": 13245.395547994121,
+    "sum": 36090172.493916035
+  },
+  "scoring_rule": "argmax(letter logprob softmax) == gold answer letter",
+  "prompt": "Traditional Chinese 4-choice MCQ + GBNF A|B|C|D + logprobs",
+  "np": 4,
+  "ctx": 16384,
+  "concurrency": 4,
+  "port": 8080,
+  "base_url": "http://127.0.0.1:8080",
+  "model_path": "/workspace/models/gemma-4-E4B-it-qat-GGUF/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf",
+  "mmproj_path": "none",
+  "binary": "/workspace/gemma4-jev-exp/bin/llama-b11153/llama-server",
+  "n_tasks": 7862,
+  "n_pending_this_run": 7723,
+  "n_already_done": 139,
+  "runtime_sec_this_run": 8905.622352827995,
+  "subjects": [
+    "engineering_math",
+    "accounting",
+    "management_accounting",
+    "financial_analysis",
+    "statistics_and_machine_learning",
+    "physics",
+    "organic_chemistry",
+    "advance_chemistry",
+    "tve_mathematics",
+    "administrative_law",
+    "taxation",
+    "trust_practice",
+    "pharmacy",
+    "pharmacology",
+    "basic_medical_science",
+    "dentistry",
+    "optometry",
+    "nautical_science",
+    "chinese_language_and_literature",
+    "taiwanese_hokkien",
+    "geography_of_taiwan",
+    "ttqav2",
+    "official_document_management"
+  ],
+  "split": "test"
+}
