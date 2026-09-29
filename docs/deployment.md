@@ -87,19 +87,15 @@ curl --fail --show-error http://127.0.0.1:8000/v1/models
 
 ## 硬體、版本與容器管理
 
-vLLM 的 [Gemma 4 部署指南](https://github.com/vllm-project/recipes/blob/main/Google/Gemma4.md)將 12B BF16 的 NVIDIA GPU 需求列為單張 40 GB 以上。實際用量仍取決於輸入長度、同時處理的請求數與引擎版本。llama.cpp 範例使用 Q4 權重，另需預留 KV cache 與運算所需記憶體，不能直接套用 BF16 的估算。兩個容器建議擇一執行，避免同時占用 GPU 記憶體。
+vLLM 的 [Gemma 4 部署指南](https://github.com/vllm-project/recipes/blob/main/Google/Gemma4.md)將 12B BF16 的 NVIDIA GPU 需求列為單張 40 GB 以上。實際用量仍取決於輸入長度、同時處理的請求數與引擎版本。llama.cpp 範例使用 Q4 權重，另需預留 KV cache 與運算所需記憶體，不能直接套用 BF16 的估算。
 
-llama.cpp 以 `-m` 載入本機 GGUF，不載入多模態投影模型，因本專案只評分文字。若要改用 CPU，將 CUDA 映像替換為 `ghcr.io/ggml-org/llama.cpp:server`、移除 `--gpus all`，並將 `--n-gpu-layers 99` 改成 `--n-gpu-layers 0`；CPU 方案需另行驗證版本與效能。vLLM 範例則維持 NVIDIA GPU 環境。
+若要改用 CPU，將 CUDA 映像替換為 `ghcr.io/ggml-org/llama.cpp:server`、移除 `--gpus all`，並將 `--n-gpu-layers 99` 改成 `--n-gpu-layers 0`；CPU 方案需另行驗證版本與效能。vLLM 範例則維持 NVIDIA GPU 環境。
 
 llama.cpp 權重保留於主機的 `~/.cache/jev/models`，vLLM 權重保留於 Docker 儲存卷 `jev-hf-cache`；移除容器不會刪除它們。容器內服務監聽 `0.0.0.0`，主機則透過 `127.0.0.1:8080` 或 `127.0.0.1:8000` 連線。不要直接將未設驗證的服務開放到外部網路。
 
 重複執行時，請保留相同的模型 revision、映像 digest、啟動參數與硬體設定，並在專案根目錄以 `uv sync --locked` 安裝 Python 相依套件。
 
 ```bash
-# 查看啟動紀錄；依使用的後端擇一執行。
-docker logs -f jev-llamacpp
-docker logs -f jev-vllm
-
 # 結束目前使用的後端；--rm 會在停止後移除容器。
 docker stop jev-llamacpp
 docker stop jev-vllm
@@ -111,10 +107,7 @@ docker stop jev-vllm
 
 | 狀況 | 處理方式 |
 | --- | --- |
-| 容器內下載很慢，或 `-hf` 啟動未進入載入階段 | 改用本頁主機下載與 `-m` 掛載流程 |
 | 健康檢查連線失敗或 HTTP 503 | 用 `docker ps -a` 與 `docker logs jev-llamacpp` 區分容器退出、下載與模型載入狀態 |
 | 容器名稱或 8080 port 已被占用 | 先確認既有服務用途，不要直接刪除；改用其他容器名稱或主機 port，並同步調整用戶端網址 |
 | CUDA 記憶體不足 | 關閉其他 GPU 工作，或減少 context、slots／GPU layers 後重新驗證；部分 CPU 執行會變慢 |
 | `enable_thinking` 棄用警告 | 此版本的啟動參數使用 `--reasoning off`；SDK 的 template 設定仍已通過本次範例 |
-
-歷史評測使用不同的模型與執行流程，重跑條件見[評測報告](evaluation.md#重現範圍)。

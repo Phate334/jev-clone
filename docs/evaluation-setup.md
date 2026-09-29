@@ -4,9 +4,7 @@
 
 本頁列出歷史評測的模型與參數，供核對結果。若要部署目前的套件，請依[部署說明](deployment.md)操作。
 
-## 能否重跑歷史評測？
-
-目前缺少原評測程式及部分版本與執行設定，無法完整重跑歷史評測。下列參數供核對使用；可重做的項目與缺少的條件見[評測報告的重現範圍](evaluation.md#重現範圍)。
+歷史分數無法完整重跑，缺少的條件見[評測報告的重現範圍](evaluation.md#重現範圍)。
 
 ## JevBench 公開集的執行參數
 
@@ -14,7 +12,6 @@
 - **啟動參數**：`-np 2 -c 16384 -ngl 0 --jinja --reasoning-budget 0`；每個 slot 為 8192 tokens，使用 CPU 推論。
 - **用戶端並行數**：2。
 - **推論介面**：Chat Completions，搭配 GBNF 單字母限制與 logprobs；結果整理為 Jev 風格的 `request`／`answers.decision`。
-- **題集**：easy 48 題、original 72 題、hard 111 題，共 231 題。
 
 ## 模型權重
 

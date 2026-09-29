@@ -6,24 +6,13 @@
 
 ## 跨模型一致性（TMMLU，n=7862）
 
-- **三個模型皆答錯：** 2137 題（約 27.2%）— 可視為題庫／領域對此系列仍偏難，或標註／題型本身難靠單字母 logprob 解。
-- **僅 12B 答對：** 1143 題 — 本批資料中 12B 獨自答對的部分。
-- **E2B 錯、E4B+12B 對：** 1340 題 — 改用中、大型模型後答對的主要題目群。
+- **三個模型皆答錯：** 2137 題（約 27.2%）。
+- **僅 12B 答對：** 1143 題。
+- **E2B 錯、E4B+12B 對：** 1340 題。
 
-三個模型皆答錯最多的科目（題數）：
+## 高信心錯誤（12B TMMLU）
 
-- `optometry`: 286
-- `nautical_science`: 182
-- `taxation`: 152
-- `geography_of_taiwan`: 147
-- `pharmacy`: 133
-- `administrative_law`: 132
-- `trust_practice`: 119
-- `basic_medical_science`: 118
-
-## 過度自信錯誤（12B TMMLU）
-
-信心度 ≥0.85 但仍答錯：**764** 題。分組正確率隨信心區間提高，但這不代表已校正，高信心也非保證正確：
+confidence ≥ 0.85 的 3,559 題中，有 **764 題答錯（21.5%）**。分組正確率隨信心區間提高，但這不代表已校正，高信心也非保證正確：
 
 | 信心區間 | n | 正確率 |
 |----------|--:|-------:|
@@ -45,8 +34,6 @@
 | `management_accounting:32` | management_accounting | A | D | 1.0 |
 | `trust_practice:229` | trust_practice | C | D | 1.0 |
 | `basic_medical_science:904` | basic_medical_science | A | C | 1.0 |
-
-**案例意涵：** 會計／稅務／台語／統測數學等弱科，即使 12B 也常「很有把握地錯」。單字母 logprob 對需要多步驟計算或語言知識的題，容易給出尖銳但錯誤的分布。
 
 ## JevBench：三個模型皆答錯與 12B hard 失誤
 
@@ -324,5 +311,3 @@ instructions：
 ```text
 What will the delivery outcome of shipment SH-2026-3391 be? Give probabilities that reflect the evidence in the state.
 ```
-
-**案例意涵：** hard 失誤常見於需詳細政策判讀／多項限制條件取捨的 choice／score；模型傾向選「看起來合理」但未正確套用題目限制條件的選項。三個模型皆答錯題更像基準本身的困難點，而非單一模型缺陷。

@@ -12,8 +12,6 @@
 
 `usage` 加總成功完成的一次 System One 嘗試內所有推論回應的 prompt/output token 數，包含 llama.cpp 加深 top-k 的完成回應，以及 vLLM 被丟棄的生成 token；不計 tokenizer/template 呼叫。若手動開啟網路重試，失敗嘗試的後端用量可能不可得，回傳 usage 不是完整硬體計費帳。
 
-後端由用戶端自動辨識，設定與代理需求見 [Python 介面](python-api.md#自動辨識)。
-
 ## 部署與答案位置
 
 環境設定見[部署說明](deployment.md)。llama.cpp 需要帶有正確 chat template 的 GGUF；vLLM 需要該版本支援的模型與 tokenizer。比較結果時記錄模型 revision、量化、引擎版本、template 與硬體，不能只記模型別名。
@@ -29,7 +27,7 @@ vLLM 將 `Answer:\nA` 等候選放進最後一則 assistant 訊息，以 prompt 
 | 本機 llama.cpp adapter | 通常 1 次 | top-k 缺漏時重試；另有範本與 tokenizer 呼叫 |
 | 本機 vLLM adapter | K 次 | 各候選均送入 prompt；另有 tokenizer 呼叫 |
 
-並行請求讓後端有機會一起排程，但不保證相同前綴只計算一次。快取效果應以使用版本與實測為準。`usage` 也不等於硬體實際重新計算量。
+並行請求不保證相同前綴只計算一次，快取效果應以實測為準。
 
 ## 問題排除
 

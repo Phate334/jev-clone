@@ -39,7 +39,7 @@ E2B 到 12B，JevBench 整體上升約 19.5 個百分點、hard 上升約 27.9 �
 
 ## 信心與錯誤
 
-12B 的 TMMLU+ 紀錄中，confidence ≥ 0.85 卻答錯的有 764 題。此 confidence 對應 `1 - H(p)/log(K)` 的分布集中度，不能稱為最大選項機率或校正後答對率。
+12B 的 TMMLU+ 紀錄中，confidence ≥ 0.85 的有 3,559 題，其中 764 題答錯（21.5%）。此 confidence 對應 `1 - H(p)/log(K)` 的分布集中度，不能稱為最大選項機率或校正後答對率。
 
 原摘要的信心分組顯示正確率隨區間提高，但單調不等於已校正。詳細分組、跨模型錯誤交集與摘錄見[案例分析](evaluation-cases.md)，結構化來源見 [case_analysis.json](gemma4-results/case_analysis.json)。
 
@@ -53,7 +53,7 @@ E2B 到 12B，JevBench 整體上升約 19.5 個百分點、hard 上升約 27.9 �
 
 `runtime_sec_this_run` 只計該輪 runner 的實際經過時間；E4B 的原總覽註記曾 resume，不能把該欄一律視為完整重跑時間。並行時延遲總和也不等於實際經過時間。
 
-JevBench 各模型原部署紀錄均為 `-np 2 -c 16384`、concurrency 2，另載入 mmproj；原總覽卻列出不同的 context、E4B 並行設定及 E2B 無 mmproj。設定差異見[歷史評測設定](evaluation-setup.md)。在缺少逐次啟動紀錄時，不將這些數字解讀為嚴格控制變因的效能比較。
+各次執行的參數紀錄不一致，詳見[歷史評測設定](evaluation-setup.md)。這些數字不適合作為控制相同條件下的效能比較。
 
 ## 原始資料索引
 
@@ -76,7 +76,7 @@ JevBench 各模型原部署紀錄均為 `-np 2 -c 16384`、concurrency 2，另�
 | 重跑完整準確率 | 已有題數、計分規則、模型檔名與部分參數 | 缺少原評測程式、固定權重版本，以及下述題集與 prompt 設定 |
 | 重跑效能比較 | 已有延遲與耗時摘要 | 缺少一致的逐次啟動設定、完整硬體環境與接續執行紀錄 |
 
-本目錄及附帶結果壓縮檔均未提供原評測程式 `scripts/run_jevbench_public.py`。模型權重也未附上；原檔名未附固定 revision 或校驗值，無法確認重新下載的權重與歷史評測一致。已知引擎版本及參數見[歷史評測設定](evaluation-setup.md)。
+原評測程式與固定權重版本未收錄，已知引擎版本、模型檔名及參數見[歷史評測設定](evaluation-setup.md)。
 
 JevBench 原紀錄的來源標示為 Benchmark Heaven／JevBench 公開集，未提供可鎖定的來源 revision。JSONL 含 request 可供閱讀，嚴格重現仍需確認原題集版本與 runner。此結果不含 sealed 題，不能與包含其他評分軸的 Official Score 直接比較。
 
