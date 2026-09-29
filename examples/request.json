@@ -1,0 +1,25 @@
+{
+  "model": "local-judge",
+  "state": "新版上線後，所有使用者登入都回傳 500，重試無效，目前無法使用服務。",
+  "questions": {
+    "team": {
+      "type": "choice",
+      "instructions": "應由哪個團隊優先處理？",
+      "criteria": {
+        "identity": "登入與身分驗證異常",
+        "billing": "訂閱與帳務異常",
+        "frontend": "畫面或前端互動異常"
+      }
+    },
+    "severity": {
+      "type": "score",
+      "instructions": "依目前服務受影響的程度評分。",
+      "criteria": ["僅外觀問題", "部分功能異常，仍有替代操作", "核心功能無法使用，沒有替代操作"]
+    },
+    "escalate": {
+      "type": "noul",
+      "instructions": "是否需要立即升級給值班工程師？",
+      "criteria": {"true": "核心服務遭到阻斷", "false": "可排程處理"}
+    }
+  }
+}
