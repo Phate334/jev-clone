@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jev"
+version = "0.2.0"
+description = "Unified Jev-style Python SDK with automatic llama.cpp and vLLM detection"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["pydantic>=2.7,<3", "typing-extensions>=4.12"]
+
+[tool.setuptools]
+packages = ["jev"]
