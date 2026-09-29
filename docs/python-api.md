@@ -64,7 +64,7 @@ with TypeSafeClient() as client:
 | 設定 | 行為 |
 | --- | --- |
 | `openai_base_url` | 優先於 `JEV_BASE_URL`，再使用 `OPENAI_BASE_URL`；預設 `http://127.0.0.1:8000/v1`，接受有或沒有尾端 `/v1` 的網址 |
-| `backend` | 優先於 `JEV_BACKEND`；接受 `auto`（預設）、`llamacpp`、`vllm`。明確指定時跳過模型清單查詢 |
+| `backend` | 優先於 `JEV_BACKEND`；預設 `auto`，不需手動設定。也接受 `llamacpp`、`vllm` |
 | `base_url` | Jev SDK 相容別名，不能與 `openai_base_url` 同時設定 |
 | `api_key` | 優先於 `JEV_API_KEY`，再使用 `OPENAI_API_KEY`；本機服務可省略 |
 | `model` | 依序使用明確參數、`JEV_MODEL`、`TYPESAFE_DEFAULT_MODEL`、`local-judge`；每次呼叫可覆寫 |
@@ -86,10 +86,6 @@ JSON 讀取後的字典可直接傳入 `client.system_one(**request)`；完整�
 
 ## 自動辨識
 
-只有 `backend="auto"` 時才查詢模型清單。首次對模型推論時，以相同的驗證資訊查詢 `GET /v1/models`，依相符模型的 `owned_by` 判斷 `vllm` 或 `llamacpp`。結果在同一 client 內依模型快取；服務變更後請建立新的 client。未知後端、模型不存在或查詢失敗均回報錯誤。
+預設使用 `auto`，不需設定 `JEV_BACKEND`。首次對模型推論時，以相同的驗證資訊查詢 `GET /v1/models`，依相符模型的 `owned_by` 判斷 `vllm` 或 `llamacpp`。結果在同一 client 內依模型快取；服務變更後請建立新的 client。未知後端、模型不存在或查詢失敗均回報錯誤。
 
-若 proxy 未提供引擎資訊，設定 `JEV_BACKEND=llamacpp` 或 `JEV_BACKEND=vllm`，即可略過 `/v1/models`，直接使用指定模型。此設定套用於同一 client 的所有模型；不同引擎請使用不同 client。
-
-反向代理仍需轉送後端原生 API：llama.cpp 需要 `/tokenize`、`/apply-template`、`/completion`，vLLM 需要 `/tokenize`、`/v1/chat/completions` 及 prompt logprobs 等擴充欄位。僅提供標準 Chat Completions 的 proxy 不足以執行本套件。llama.cpp 的範本與 tokenizer 請求不帶模型名稱，proxy 必須將這些路徑與推論請求送到同一模型，必要時使用模型專屬網址。若網址為 `/proxy/v1`，原生 API 會送至 `/proxy/tokenize` 等路徑。
-
-辨識依據見 [llama.cpp 文件](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md#get-v1models-openai-compatible-model-info-api)與 [vLLM 原始碼](https://github.com/vllm-project/vllm/blob/main/vllm/entrypoints/serve/engine/protocol.py)。後端版本與驗證範圍見[部署文件](deployment.md)。`owned_by` 並非標準化的引擎識別欄位，代理改寫或版本變動可能使辨識失敗。
+辨識依據見 [llama.cpp 文件](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md#get-v1models-openai-compatible-model-info-api)與 [vLLM 原始碼](https://github.com/vllm-project/vllm/blob/main/vllm/entrypoints/serve/engine/protocol.py)。後端版本與驗證範圍見[部署文件](deployment.md)。

@@ -17,8 +17,6 @@
 export JEV_BASE_URL=http://127.0.0.1:8080/v1
 ```
 
-若 proxy 未提供引擎資訊，另設 `JEV_BACKEND=llamacpp` 或 `JEV_BACKEND=vllm`，即可跳過模型清單查詢。
-
 vLLM 的部署範例使用 `http://127.0.0.1:8000/v1`。若服務需要驗證，另設 `JEV_API_KEY`。
 
 輸入指定的模型為 `local-judge`，必須與後端提供的模型名稱或別名一致；若不同，請修改輸入的 `model`。此明確設定優先於 `JEV_MODEL`；最小範例 `quickstart.py` 則直接使用環境變數的模型設定。
@@ -53,6 +51,6 @@ uv run python examples/json_request.py
 | --- | --- |
 | 找不到 `request.json` | 確認 `request.json` 與 `json_request.py` 位於同一個目錄 |
 | 無法連線、HTTP 503 | 先完成模型載入；確認目前終端的 `JEV_BASE_URL` 為 `http://127.0.0.1:8080/v1` |
-| 找不到模型或無法辨識後端 | 檢查 `/v1/models` 是否包含 `local-judge` ；自動辨識需要正確的 `owned_by`，也可用 `JEV_BACKEND` 明確指定後端 |
+| 找不到模型或無法辨識後端 | 檢查 `/v1/models` 是否包含 `local-judge`，且 `owned_by` 為 `llamacpp` 或 `vllm` |
 
 JSON 是 `system_one()` 的參數資料，不是直接傳給後端 Chat Completions API 的請求格式。完整介面說明見 [Python API 文件](../docs/python-api.md)。

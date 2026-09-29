@@ -83,7 +83,7 @@ curl --fail --show-error http://127.0.0.1:8000/health
 curl --fail --show-error http://127.0.0.1:8000/v1/models
 ```
 
-確認健康檢查成功、模型清單列出 `local-judge`，再設定 `export JEV_BASE_URL=http://127.0.0.1:8000/v1` 與 `export JEV_BACKEND=vllm`，依[使用範例](../examples/README.md)呼叫 SDK。vLLM 的 BF16 範例與 llama.cpp 的 Q4 量化範例使用不同權重格式與精度；GPU 記憶體需求、版本固定方式與容器操作見[下節](#硬體版本與容器管理)。
+確認健康檢查成功、模型清單列出 `local-judge`，再設定 `export JEV_BASE_URL=http://127.0.0.1:8000/v1`，依[使用範例](../examples/README.md)呼叫 SDK。vLLM 的 BF16 範例與 llama.cpp 的 Q4 量化範例使用不同權重格式與精度；GPU 記憶體需求、版本固定方式與容器操作見[下節](#硬體版本與容器管理)。
 
 ## 硬體、版本與容器管理
 
